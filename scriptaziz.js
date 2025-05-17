@@ -41,7 +41,7 @@ const scrollRevealOption = {
 
   class Particle {
     constructor() {
-      this.radius = Math.random() * 5 + 1;
+      this.radius = Math.random() * 1 + 1;
       this.x = Math.random() * canvas.width;
       this.y = Math.random() * canvas.height;
       this.dx = (Math.random() - 0.5) * 2;

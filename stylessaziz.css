@@ -92,12 +92,26 @@ body {
 }
 
 header {
+  position: relative;
+  z-index: 99;
+  overflow: hidden;
+}
+
+header::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
   background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.2)),
-    url("logo/loga.jpg");
+                    url("logo/bk.avif");
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
+  filter: blur(5px);
+  z-index: -999;
 }
+
 
 nav {
   max-width: var(--max-width);
