@@ -205,84 +205,6 @@
   </section>
 
 
- <?php
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-
-require 'phpmailer/src/Exception.php';
-require 'phpmailer/src/PHPMailer.php';
-require 'phpmailer/src/SMTP.php';
-
-$scrollToForm = false;
-$successMsg = '';
-$errorMsg = '';
-
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["send"])) {
-    // Nettoyage et validation simple
-    $nom = trim($_POST["nom"]);
-    $tel = trim($_POST["tel"]);
-    $prd = trim($_POST["prd"]);
-    $ville = trim($_POST["ville"]);
-    $adresse = trim($_POST["adresse"]);
-    $email = filter_var(trim($_POST["email"]), FILTER_VALIDATE_EMAIL) ?: '';
-    $message = trim($_POST["message"]);
-
-    if (!$nom || !$tel || !$prd || !$ville || !$adresse) {
-        $errorMsg = "Veuillez remplir tous les champs obligatoires.";
-        $scrollToForm = true;
-    } else {
-        $body = "
-        <h1>Votre Site ONE_FOR_ALL:</h1>
-        <h2>Nouvelle commande reçue :</h2>
-        <p><strong>Nom complet :</strong> " . htmlspecialchars($nom) . "</p>
-        <p><strong>Téléphone :</strong> " . htmlspecialchars($tel) . "</p>
-        <p><strong>Produit :</strong> " . htmlspecialchars($prd) . "</p>
-        <p><strong>Ville :</strong> " . htmlspecialchars($ville) . "</p>
-        <p><strong>Adresse :</strong> " . htmlspecialchars($adresse) . "</p>
-        <p><strong>Email :</strong> " . ($email ? htmlspecialchars($email) : "Non fourni") . "</p>
-        <p><strong>Message :</strong><br>" . nl2br(htmlspecialchars($message)) . "</p>
-        ";
-
-        $mail = new PHPMailer(true);
-
-        try {
-            $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com';
-            $mail->SMTPAuth = true;
-            $mail->Username = 'azizabour77@gmail.com';
-
-            // ⚠️ CHANGE ici ton mot de passe app
-            $mail->Password = 'oetg uqlu enxc xayz';
-
-            $mail->SMTPSecure = 'ssl';
-            $mail->Port = 465;
-
-            $mail->CharSet = 'UTF-8';
-
-            $mail->setFrom('azizabour77@gmail.com', 'Formulaire Commande');
-            $mail->addAddress('azizabour77@gmail.com');
-
-            $mail->isHTML(true);
-            $mail->Subject = 'Nouvelle commande client';
-            $mail->Body = $body;
-
-
-
-            $mail->send();
-           
-
-            $successMsg = "✅ Votre commande a été envoyée avec succès.";
-            $scrollToForm = true;
-            
-        }
-         catch (Exception $e) {
-            $errorMsg = "❌ Erreur lors de l'envoi du mail : " . $mail->ErrorInfo;
-            $scrollToForm = true;
-        }
-    }
-}
-?>
-
 <section class="section__container modern__container" id="modern">
   <div class="modern__image text-center">
     
@@ -298,34 +220,34 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["send"])) {
       <div class="row">
         <div class="col-md-6">
           <label class="required-field" for="nom">Nom complet :</label>
-          <input type="text" name="nom" id="nom" required value="<?= isset($nom) ? htmlspecialchars($nom) : '' ?>">
+          <input type="text" name="nom" id="nom" required >
 
           <label class="required-field" for="tel">Numéro de téléphone :</label>
-          <input type="text" name="tel" id="tel" required value="<?= isset($tel) ? htmlspecialchars($tel) : '' ?>">
+          <input type="text" name="tel" id="tel" required >
 
           <label class="required-field" for="prd">Choisissez un produit :</label>
           <select name="prd" id="prd" class="form-select" required>
-              <option value="" disabled <?= empty($prd) ? 'selected' : '' ?>>-- Sélectionnez un produit --</option>
-              <option value="Airpods" <?= (isset($prd) && $prd == 'Airpods') ? 'selected' : '' ?>>Airpods</option>
-              <option value="Casquebosequietcomfortultra" <?= (isset($prd) && $prd == 'Casquebosequietcomfortultra') ? 'selected' : '' ?>>Casque bose quietcomfort ultra</option>
-              <option value="PackAirpodspro2+smartwatch" <?= (isset($prd) && $prd == 'PackAirpodspro2+smartwatch') ? 'selected' : '' ?>>Pack Airpods pro 2 + smart watch</option>
-              <option value="BaffeLN-911" <?= (isset($prd) && $prd == 'BaffeLN-911') ? 'selected' : '' ?>>Baffe LN-911</option>
-              <option value="BaffeLN-2386" <?= (isset($prd) && $prd == 'BaffeLN-2386') ? 'selected' : '' ?>>Baffe LN-2386</option>
+              <option value="" disabled >-- Sélectionnez un produit --</option>
+              <option value="Airpods" >Airpods</option>
+              <option value="Casquebosequietcomfortultra">Casque bose quietcomfort ultra</option>
+              <option value="PackAirpodspro2+smartwatch">Pack Airpods pro 2 + smart watch</option>
+              <option value="BaffeLN-911">Baffe LN-911</option>
+              <option value="BaffeLN-2386">Baffe LN-2386</option>
           </select>
 
           <label class="required-field" for="ville">Ville :</label>
-          <input type="text" name="ville" id="ville" required value="<?= isset($ville) ? htmlspecialchars($ville) : '' ?>">
+          <input type="text" name="ville" id="ville" required >
         </div>
 
         <div class="col-md-6">
           <label class="required-field" for="adresse">Adresse :</label>
-          <input type="text" name="adresse" id="adresse" required value="<?= isset($adresse) ? htmlspecialchars($adresse) : '' ?>">
+          <input type="text" name="adresse" id="adresse" required >
 
           <label for="email">Email (optionnel) :</label>
-          <input type="email" name="email" id="email" value="<?= isset($email) ? htmlspecialchars($email) : '' ?>">
+          <input type="email" name="email" id="email">
 
           <label for="message">Message (optionnel) :</label>
-          <textarea name="message" id="message" rows="5"><?= isset($message) ? htmlspecialchars($message) : '' ?></textarea>
+          <textarea name="message" id="message" rows="5"></textarea>
         </div>
       </div>
 
@@ -374,11 +296,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["send"])) {
     </div>
   </section>
 
-<?php if ($scrollToForm): ?>
+
 <script>
   document.getElementById('contact-form').scrollIntoView({ behavior: 'smooth' });
 </script>
-<?php endif; ?>
+
 
 <div class="comade-fixed" onclick="window.open('https://wa.me/212694869372', '_blank')" role="button" aria-label="Commander via WhatsApp">
   <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-whatsapp"
@@ -441,20 +363,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["send"])) {
 
     </div>
   </footer>
-
-<!-- <script>
-    setTimeout(() => {
-        const msg = document.getElementById('confirmation-message');
-        if (msg) msg.innerHTML = '';
-    }, 3000);
-
-    <?php if ($scrollToForm): ?>
-        window.scrollTo({
-            top: document.getElementById("contact-form").offsetTop,
-            behavior: "smooth"
-        });
-    <?php endif; ?>
-</script> -->
   <script src="js/bootstrap.js"></script>
   <script src="https://unpkg.com/scrollreveal"></script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
