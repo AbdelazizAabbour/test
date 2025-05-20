@@ -226,14 +226,14 @@
           <input type="text" name="tel" id="tel" required >
 
           <label class="required-field" for="prd">Choisissez un produit :</label>
-          <select name="prd" id="prd" class="form-select" required>
-              <option value="" disabled >-- Sélectionnez un produit --</option>
-              <option value="Airpods" >Airpods</option>
-              <option value="Casquebosequietcomfortultra">Casque bose quietcomfort ultra</option>
-              <option value="PackAirpodspro2+smartwatch">Pack Airpods pro 2 + smart watch</option>
-              <option value="BaffeLN-911">Baffe LN-911</option>
-              <option value="BaffeLN-2386">Baffe LN-2386</option>
-          </select>
+          <input list="produits" name="prd" id="prd" class="form-control" required placeholder="-- Sélectionnez un produit --">
+            <datalist id="produits">
+              <option value="Airpods">
+              <option value="Casque bose quietcomfort ultra">
+              <option value="Pack Airpods pro 2 + smart watch">
+              <option value="Baffe LN-911">
+              <option value="Baffe LN-2386">
+            </datalist>
 
           <label class="required-field" for="ville">Ville :</label>
           <input type="text" name="ville" id="ville" required >
